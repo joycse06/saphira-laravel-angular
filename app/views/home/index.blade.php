@@ -18,11 +18,11 @@
         <li ng-if="isAuthenticated()"><a href="/#/profile">Profile</a></li>
     </ul>
     <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
-        <li><a href="/#/login">Login</a></li>
-        <li><a href="/#/signup">Sign up</a></li>
+        <li><a href="/#!/users/signin">Login</a></li>
+        <li><a href="/#!/users/register">Sign up</a></li>
     </ul>
     <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-        <li><a href="/#/logout">Logout</a></li>
+        <li><a href="/#!/users/logout">Logout</a></li>
     </ul>
 </div>
 

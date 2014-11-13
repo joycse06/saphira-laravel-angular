@@ -48,6 +48,25 @@ Route::filter('auth', function()
 	}
 });
 
+/* Api authentication Filter */
+
+Route::filter('apiauth', function()
+{
+    if (!Request::header('Authorization'))
+    {
+        return Response::json(array('message' => 'Please make sure your request has an Authorization header'), 401);
+    }
+
+    $token = explode(' ', Request::header('Authorization'))[1];
+    $payloadObject = JWT::decode($token, Config::get('secrets.TOKEN_SECRET'));
+    $payload = json_decode(json_encode($payloadObject), true);
+
+    if ($payload['exp'] < time())
+    {
+        Response::json(array('message' => 'Token has expired'));
+    }
+});
+
 
 Route::filter('auth.basic', function()
 {
@@ -83,8 +102,29 @@ Route::filter('guest', function()
 
 Route::filter('csrf', function()
 {
-	if (Session::token() !== Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+    if (Session::token() !== Input::get('_token'))
+    {
+        throw new IlluminateSessionTokenMismatchException;
+    }
+});
+
+Route::filter('xhr', function(){
+    if(!Request::ajax())
+        return Response::make('Not Found', 404);
+});
+
+// XSRF token over xhr requests, sanity check
+Route::filter('xhrf', function() {
+   if((!isset($_COOKIE['XSRF-TOKEN']) || is_null(Request::header('X-XSRF-TOKEN'))) ||
+       ($_COOKIE['XSRF-TOKEN'] !== Request::header('X-XSRF-TOKEN')) )
+       return Response::make('Not Found', 404);
+});
+
+// To Protect against Json Injection
+App::after(function($request, $response)
+{
+    if($response instanceof \Illuminate\Http\JsonResponse) {
+        $json = ")]}',\n" . $response->getContent();
+        return $response->setContent($json);
+    }
 });

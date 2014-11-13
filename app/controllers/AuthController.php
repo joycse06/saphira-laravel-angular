@@ -34,7 +34,9 @@ class AuthController extends ApiController
         $user = $this->execute(RegisterUserCommand::class);
 
         return $this->respondWithArray([
-            'token' => $this->createToken($user)
+            'token' => $this->createToken($user),
+            'message' => 'You have been successfully registered',
+            'user' => $user->toArray()
         ]);
 
     }

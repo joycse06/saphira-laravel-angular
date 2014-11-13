@@ -6,9 +6,9 @@ var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
 
 var paths = {
-  css: 'public/src/css/**/*.css',
-  js: 'public/src/js/**/*.js',
-  templates: 'public/src/templates/**/*.html'
+  css: 'public/src/js/**/**/*.css',
+  js: 'public/src/js/**/**/*.js',
+  templates: 'public/src/js/**/views/*.html'
 };
 
 var dest = {
@@ -38,6 +38,7 @@ var bowerjs = [
     'public/components/angular-translate/angular-translate.min.js',
     'public/components/satellizer/satellizer.min.js',
     'public/src/js/app.js',
+    'public/src/js/**/*.js',
      paths.js
 ];
 
@@ -51,7 +52,7 @@ gulp.task('css', function() {
 
 gulp.task('js', function() {
    return gulp.src(bowerjs)
-       .pipe(minifyjs())
+//       .pipe(minifyjs())
        .pipe(concat('main.min.js'))
        .pipe(gulp.dest(dest.js));
 });

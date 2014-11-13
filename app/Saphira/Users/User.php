@@ -9,23 +9,10 @@ use Saphira\Registration\Events\UserRegistered;
 use Laracasts\Commander\Events\EventGenerator;
 use Laracasts\Presenter\PresentableTrait;
 
-class User extends Eloquent implements UserInterface, RemindableInterface
+class User extends \Cartalyst\Sentry\Users\Eloquent\User
 {
 
     use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
-
-    /**
-     * Which fields may be mass assigned
-     * @var array
-     */
-    protected $fillable = [ 'username', 'email', 'password' ];
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
 
     /**
      * Path to the presenter for a user
@@ -33,12 +20,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface
      */
     protected $presenter = 'Larabook\Users\UserPresenter';
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = array('password', 'remember_token');
 
     /**
      * Passwords must always be hashed
@@ -59,9 +40,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface
      * @param $password
      * @return static
      */
-    public static function register($displayName, $email, $password)
+    public static function register($displayName, $email, $username, $password)
     {
-        $user = new static( compact('displayName', 'email', 'password') );
+        $user = new static( compact('displayName', 'email', 'username', 'password') );
 
         $user->raise(new UserRegistered($user));
 

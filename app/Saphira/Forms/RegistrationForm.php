@@ -15,6 +15,7 @@ class RegistrationForm extends FormValidator
     protected $rules = [
         'displayName' => 'required',
         'email'     => 'required|email|unique:users',
-        'password'  => 'required'
+        'username' => 'required|unique:users',
+        'password'  => 'required|confirm'
     ];
 }
