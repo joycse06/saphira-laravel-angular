@@ -5,7 +5,7 @@ class RegisterUserCommand
     public $displayName;
     public $email;
     public $password;
-    private $username;
+    public $username;
 
     public function __construct($displayName, $email, $username, $password)
     {

@@ -9,7 +9,7 @@
     <link href="dist/css/main.min.css" rel="stylesheet">
 </head>
 <body>
-<div ng-controleller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
+<div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
     <div class="navbar-header">
         <a class="navbar-brand" href="/"><i class="ion-ios7-pulse-strong"></i> Saphira</a>
     </div>
@@ -18,11 +18,11 @@
         <li ng-if="isAuthenticated()"><a href="/#/profile">Profile</a></li>
     </ul>
     <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
-        <li><a href="/#!/users/signin">Login</a></li>
-        <li><a href="/#!/users/register">Sign up</a></li>
+        <li><a href="/#!/user/signin">Login</a></li>
+        <li><a href="/#!/user/register">Sign up</a></li>
     </ul>
     <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-        <li><a href="/#!/users/logout">Logout</a></li>
+        <li><a href="/#!/user/signout">Logout</a></li>
     </ul>
 </div>
 

@@ -59,9 +59,6 @@ App::error(function(\Laracasts\Validation\FormValidationException $exception, $c
             'error' => $exception->getErrors()
         ], 404);
     }else{
-        echo 'got an error';
-        var_dump($exception->getErrors());
-        die;
         return Redirect::back()->withInput()->withErrors($exception->getErrors());
     }
 

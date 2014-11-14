@@ -37,6 +37,8 @@ var bowerjs = [
     'public/components/angular-sanitize/angular-sanitize.min.js',
     'public/components/angular-translate/angular-translate.min.js',
     'public/components/satellizer/satellizer.min.js',
+    'public/components/lodash/dist/lodash.js',
+    'public/components/restangular/dist/restangular.js',
     'public/src/js/app.js',
     'public/src/js/**/*.js',
      paths.js

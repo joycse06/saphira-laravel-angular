@@ -63,7 +63,29 @@ Route::filter('apiauth', function()
 
     if ($payload['exp'] < time())
     {
-        Response::json(array('message' => 'Token has expired'));
+        return Response::json(array('message' => 'Token has expired'));
+    }
+
+    $user_id = $payload['sub'];
+
+    try
+    {
+        $user = Sentry::findUserById($user_id);
+
+        Sentry::login($user, false);
+    }
+    catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+    {
+        return Response::json(array('message' => 'User was not found.'), 401);
+    }
+    catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
+    {
+        return Response::json(array('message' => 'Please activate your account.'), 401);
+    }
+
+    catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
+    {
+        return Response::json(array('message' => 'You are banned.'), 200);
     }
 });
 

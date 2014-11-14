@@ -14,6 +14,8 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User
 
     use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
 
+    public $activated = true;
+
     /**
      * Path to the presenter for a user
      * @var string
@@ -21,14 +23,13 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User
     protected $presenter = 'Larabook\Users\UserPresenter';
 
 
-    /**
-     * Passwords must always be hashed
-     * @param $password
-     */
-    public function setPasswordAttribute($password)
+
+
+    public static function boot()
     {
-        $this->attributes['password'] = Hash::make($password);
+        self::$hasher = new \Cartalyst\Sentry\Hashing\NativeHasher();
     }
+
 
 
     /**

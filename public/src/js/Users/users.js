@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('Saphira.users', ['ui.router', 'mgcrea.ngStrap', 'satellizer'])
-.constant('PAGINATOR', {size: 2, range: 5})
-    .config(function(){
-        console.log('This is a test log.');
-    });
+angular.module('Saphira.users', ['ui.router', 'mgcrea.ngStrap', 'satellizer','restangular'])
+.constant('PAGINATOR', {size: 2, range: 5});
+//    .config(['Restangular', function(Restangular){
+//        Restangular.setBaseUrl('/api/v1');
+//    }]);

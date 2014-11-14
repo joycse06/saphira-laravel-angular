@@ -4,9 +4,29 @@ angular.module('Saphira.users')
     .controller('SessionSigninController', ['$scope', '$rootScope', '$auth', '$alert', '$state',
         function($scope, $rootScope, $auth, $alert, $state) {
 
-            console.log('Hello This is a test from controller');
             $scope.user = {};
             $scope.errors = [];
+
+            $scope.login = function() {
+                $auth.login({ email: $scope.email, password: $scope.password })
+                    .then(function() {
+                        $alert({
+                            content: 'You have successfully logged in',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    })
+                    .catch(function(response) {
+                        $alert({
+                            content: response.data.message,
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    });
+            };
+
             $scope.authenticate = function (provider) {
                 $auth.authenticate(provider)
                     .then(function() {
@@ -32,14 +52,13 @@ angular.module('Saphira.users')
     .controller('SessionRegisterController', ['$rootScope', '$scope', '$auth', '$alert',
         function($rootScope, $scope, $auth, $alert){
 
-            console.log('Hello This is a test from controller');
             $scope.signup = function() {
                 $auth.signup({
                     displayName: $scope.displayName,
                     username: $scope.username,
                     email: $scope.email,
                     password: $scope.password,
-                    password_confirmation: $scope.password_confirmation
+                    password_confirmation: $scope.confirm_password
                 }).catch(function(response){
                         $alert({
                             content: response.data.message,
@@ -51,8 +70,8 @@ angular.module('Saphira.users')
             };
         }
     ])
-    .controller('SessionSignoutController', ['$auth', '$alert',
-        function($auth, $alert) {
+    .controller('SessionSignoutController', ['$state','$auth', '$alert',
+        function($state, $auth, $alert) {
             if(!$auth.isAuthenticated()){
                 return;
             }
@@ -65,7 +84,9 @@ angular.module('Saphira.users')
                         type: 'material',
                         duration: 3
                     });
+                    $state.go('session.signin');
                 });
+
         }
     ])
     .controller('SessionForgotPasswordController', ['$scope', '$state', 'Users',

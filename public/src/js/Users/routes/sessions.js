@@ -4,6 +4,7 @@ angular.module('Saphira.users')
     .config(['$stateProvider',function($stateProvider) {
 
         console.log('Console.log from session routes.', $stateProvider
+
         );
        // States for the session
         $stateProvider
@@ -25,6 +26,11 @@ angular.module('Saphira.users')
                 url: '/user/register',
                 templateUrl: '/dist/templates/users/views/signup.html',
                 controller: 'SessionRegisterController'
+            })
+            .state('session.signout', {
+                url: '/user/signout',
+                templateUrl: null,
+                controller: 'SessionSignoutController'
             })
             .state('session.password', {
                 url: '/user/forgot-password',

@@ -16,6 +16,6 @@ class RegistrationForm extends FormValidator
         'displayName' => 'required',
         'email'     => 'required|email|unique:users',
         'username' => 'required|unique:users',
-        'password'  => 'required|confirm'
+        'password'  => 'required|confirmed'
     ];
 }
